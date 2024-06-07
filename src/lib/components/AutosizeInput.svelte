@@ -1,15 +1,29 @@
-<script>
-  import { onMount, afterUpdate } from 'svelte';
-  export let value = '';
-  export let placeholder = '';
-  export let placeholderIsMinWidth = false;
-  export let minWidth = 0;
-  export let wrapperClass = '';
+<script lang="ts">
+  import { afterUpdate, onMount } from 'svelte';
+  import type { HTMLInputAttributes } from 'svelte/elements';
 
-  let inputWidth = +minWidth;
-  let containerWidth = 0;
+  type $$Props = HTMLInputAttributes & {
+    value: string;
+    placeholder?: string | undefined;
+    placeholderIsMinWidth: boolean;
+    minWidth?: string | undefined;
+    maxWidth?: string | undefined;
+  };
 
-  const updateInputWidth = () => {
+  export let value: $$Props['value'] = undefined;
+  export let placeholder: $$Props['placeholder'] = undefined;
+  export let placeholderIsMinWidth: $$Props['placeholderIsMinWidth'] = false;
+  export let minWidth: $$Props['minWidth'] = undefined;
+  export let maxWidth: $$Props['maxWidth'] = undefined;
+
+  let inputWidth = minWidth ? +minWidth : 0;
+
+  let wrapperRef: HTMLDivElement;
+  let inputRef: HTMLInputElement;
+  let sizerRef: HTMLDivElement;
+  let placeHolderSizerRef: HTMLDivElement;
+
+  export const updateInputWidth = () => {
     const margin = 2;
     let newInputWidth = sizerRef.scrollWidth + margin;
     if (placeholder && (!value || placeholderIsMinWidth)) {
@@ -19,70 +33,41 @@
       );
     }
 
-    if (newInputWidth < minWidth) {
-      newInputWidth = minWidth;
+    if (minWidth && newInputWidth < +minWidth) {
+      newInputWidth = +minWidth;
     }
 
-    // containerWidth = getComputedStyle(wrapperRef.parentElement).width.replace(
-    //   'px',
-    //   ''
-    // );
-
-    // Calculate total width occupied by sibling elements
-    let siblingsWidth = 0;
-    const siblings = wrapperRef.parentElement.children;
-    for (let i = 0; i < siblings.length; i++) {
-      if (siblings[i] !== wrapperRef) {
-        const siblingStyle = window.getComputedStyle(siblings[i]);
-        siblingsWidth +=
-          siblings[i].offsetWidth +
-          parseFloat(siblingStyle.marginLeft) +
-          parseFloat(siblingStyle.marginRight);
-      }
-    }
-
-    // Calculate the maximum available width for the input
-    const parentStyle = window.getComputedStyle(wrapperRef.parentElement);
-    const parentPadding =
-      parseFloat(parentStyle.paddingLeft) +
-      parseFloat(parentStyle.paddingRight) +
-      parseFloat(parentStyle.gap);
-    const parentWidth = wrapperRef.parentElement.clientWidth - parentPadding;
-    const availableWidth = parentWidth - siblingsWidth;
-
-    if (newInputWidth > availableWidth) {
-      newInputWidth = availableWidth;
+    if (maxWidth && newInputWidth > +maxWidth) {
+      newInputWidth = +maxWidth;
     }
 
     inputWidth = newInputWidth;
   };
 
-  const copyInputStyles = () => {
-    if (!window.getComputedStyle) return;
+  const copyInputStyles = (): void => {
+    if (!window.getComputedStyle || !inputRef || !sizerRef) {
+      return;
+    }
+
     const computedStyles = window.getComputedStyle(inputRef);
-    const stylesToCopy = [
-      'font-size',
-      'font-family',
-      'font-weight',
-      'font-style',
-      'letter-spacing',
-      'text-transform',
+    const stylesToCopy: Array<keyof CSSStyleDeclaration> = [
+      'fontSize',
+      'fontFamily',
+      'fontWeight',
+      'fontStyle',
+      'letterSpacing',
+      'textTransform',
       'padding',
       'border'
     ];
 
-    stylesToCopy.forEach((style) => {
+    for (const style of stylesToCopy) {
       sizerRef.style[style] = computedStyles[style];
       if (placeHolderSizerRef) {
         placeHolderSizerRef.style[style] = computedStyles[style];
       }
-    });
+    }
   };
-
-  let wrapperRef;
-  let inputRef;
-  let sizerRef;
-  let placeHolderSizerRef;
 
   onMount(() => {
     copyInputStyles();
@@ -94,15 +79,15 @@
   });
 </script>
 
-<div bind:this={wrapperRef} class={`flex`}>
+<div bind:this={wrapperRef} class="flex">
   <input
     bind:this={inputRef}
     bind:value
     style={`width: ${inputWidth}px;`}
-    class={`box-content`}
+    class="box-content"
     {placeholder}
     on:input={updateInputWidth}
-    on:focus={updateInputWidth}
+    on:focus
     on:blur
     on:change
     on:click
