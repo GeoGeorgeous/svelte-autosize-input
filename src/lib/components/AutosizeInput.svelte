@@ -43,7 +43,6 @@
 
     inputWidth = newInputWidth;
   };
-
   const copyInputStyles = (): void => {
     if (!window.getComputedStyle || !inputRef || !sizerRef) {
       return;
@@ -62,9 +61,11 @@
     ];
 
     for (const style of stylesToCopy) {
-      sizerRef.style[style] = computedStyles[style];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (sizerRef.style as any)[style] = computedStyles[style];
       if (placeHolderSizerRef) {
-        placeHolderSizerRef.style[style] = computedStyles[style];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (placeHolderSizerRef.style as any)[style] = computedStyles[style];
       }
     }
   };
