@@ -87,7 +87,7 @@
     style={`width: ${inputWidth}px;`}
     class="box-content"
     {placeholder}
-    on:input={updateInputWidth}
+    on:input={() => updateInputWidth}
     on:focus
     on:blur
     on:change
@@ -103,7 +103,7 @@
     on:mouseenter
     on:mouseleave
     on:paste
-    on:wheel
+    on:wheel|passive
     {...$$restProps} />
   <div
     bind:this={sizerRef}
