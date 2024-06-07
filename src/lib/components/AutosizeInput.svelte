@@ -1,79 +1,39 @@
-<script lang="ts">
-  import { onMount, afterUpdate, onDestroy } from 'svelte';
-  import type { HTMLInputAttributes } from 'svelte/elements';
-
-  // Define props similar to the React component's propTypes
-  type $$Props = HTMLInputAttributes & {
-    value: string | number | undefined;
-    placeholder?: string;
-    minWidth?: number;
-    extraWidth?: number;
-    inputStyle?: object;
-    inputClassName?: string;
-    injectStyles?: boolean;
-    placeholderIsMinWidth?: boolean;
-    onAutosize?: (width: number) => void;
-    style?: object;
-    className?: string;
-  };
-
-  // Default values for props
-  export let value: $$Props['value'] = undefined;
+<script>
+  import { onMount, afterUpdate } from 'svelte';
+  export let value = '';
   export let placeholder = '';
-  export let minWidth: number = 1;
-  export let extraWidth: number = 0;
-  export let inputStyle: object = {};
-  export let inputClassName = '';
   export let placeholderIsMinWidth = false;
-  export let onAutosize: $$Props['onAutosize'];
-  export let style: object = {};
-  export let className = '';
+  export let minWidth = 0;
 
-  // References to DOM elements
-  let wrapperRef: HTMLDivElement;
-  let inputRef: HTMLInputElement;
-  let sizerRef: HTMLDivElement;
-  let placeHolderSizerRef: HTMLDivElement;
-  let inputWidth = minWidth;
+  let inputWidth = +minWidth;
+  let containerWidth = 0;
 
-  // Update the input width based on the content and placeholder
   const updateInputWidth = () => {
-    if (!sizerRef || typeof sizerRef.scrollWidth === 'undefined') return;
-
-    let newInputWidth = sizerRef.scrollWidth + 2;
-
+    const margin = 2;
+    let newInputWidth = sizerRef.scrollWidth + margin;
     if (placeholder && (!value || placeholderIsMinWidth)) {
       newInputWidth = Math.max(
         newInputWidth,
-        placeHolderSizerRef.scrollWidth + 2
+        placeHolderSizerRef.scrollWidth + margin
       );
     }
 
-    // Apply extraWidth, with special handling for number types
-    let calculatedExtraWidth = extraWidth;
-    if (
-      typeof inputRef.type === 'string' &&
-      inputRef.type === 'number' &&
-      extraWidth === 0
-    ) {
-      calculatedExtraWidth = 16; // Default extraWidth for number inputs
-    }
-    newInputWidth += calculatedExtraWidth;
-
-    // Ensure the new width is not less than minWidth
     if (newInputWidth < minWidth) {
       newInputWidth = minWidth;
     }
 
-    if (newInputWidth !== inputWidth) {
-      inputWidth = newInputWidth;
-      if (typeof onAutosize === 'function') {
-        onAutosize(inputWidth);
-      }
+    containerWidth = getComputedStyle(wrapperRef.parentElement).width.replace(
+      'px',
+      ''
+    );
+
+    if (newInputWidth >= containerWidth) {
+      newInputWidth = containerWidth;
     }
+
+    inputWidth = newInputWidth;
   };
 
-  // Copy relevant styles from the input to the sizer elements
   const copyInputStyles = () => {
     if (!window.getComputedStyle) return;
     const computedStyles = window.getComputedStyle(inputRef);
@@ -96,39 +56,33 @@
     });
   };
 
-  // Lifecycle hooks to manage component mounting and updating
+  let wrapperRef;
+  let inputRef;
+  let sizerRef;
+  let placeHolderSizerRef;
+
   onMount(() => {
     copyInputStyles();
     updateInputWidth();
   });
 
   afterUpdate(() => {
-    copyInputStyles();
     updateInputWidth();
-  });
-
-  onDestroy(() => {
-    inputRef = null;
-    sizerRef = null;
-    placeHolderSizerRef = null;
-    wrapperRef = null;
   });
 </script>
 
-<svelte:window on:resize={updateInputWidth} />
-
-<div class={className} {style} bind:this={wrapperRef}>
+<div bind:this={wrapperRef} class={`inline-flex`}>
   <input
     bind:this={inputRef}
     bind:value
+    style={`width: ${inputWidth}px;`}
+    class={`box-content`}
     {placeholder}
-    style={`width: ${inputWidth}px; ${inputStyle}`}
-    class="box-content max-w-full"
     on:input={updateInputWidth}
     on:blur
     on:change
     on:click
-    on:focus={() => copyInputStyles()}
+    on:focus
     on:focusin
     on:focusout
     on:keydown
@@ -143,13 +97,13 @@
     {...$$restProps} />
   <div
     bind:this={sizerRef}
-    style="position: absolute; top: 0; left: 0; visibility: hidden; height: 0; overflow: scroll; white-space: pre;">
+    class="invisible absolute left-0 top-0 overflow-scroll whitespace-pre">
     {value || ''}
   </div>
   {#if placeholder}
     <div
       bind:this={placeHolderSizerRef}
-      style="position: absolute; top: 0; left: 0; visibility: hidden; height: 0; overflow: scroll; white-space: pre;">
+      class="invisible absolute left-0 top-0 overflow-scroll whitespace-pre">
       {placeholder}
     </div>
   {/if}
