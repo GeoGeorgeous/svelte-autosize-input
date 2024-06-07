@@ -52,6 +52,7 @@
   <label for="demo-input-4" class="mb-1 text-sm font-semibold text-gray-800"
     >Input with placeholder as minimum width:</label>
   <AutosizeInput
+    placeholderIsMinWidth
     id="demo-input-4"
     bind:value={value4}
     placeholder="Your name"
