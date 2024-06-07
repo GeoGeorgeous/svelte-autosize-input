@@ -7,7 +7,8 @@
   let value4 = '';
   let value5 = '';
   let value6 = 'McDonalds';
-  let value7 = 'Double Cheeseburger';
+  let value7 = 'Double Cheeseburger, Fries, and a Coke';
+  let value8 = '12312';
 
   let nameRef;
   let descriptionRef;
@@ -95,21 +96,27 @@
         d="M16 16h.01" /><path d="m2 16 20 6-6-20A20 20 0 0 0 2 16" /><path
         d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4" /></svg>
   </div>
-  <div class="flex w-full max-w-full items-start gap-2">
+  <div class="flex w-full max-w-full flex-initial items-start gap-1">
     <AutosizeInput
       bind:inputRef={nameRef}
       id="demo-input-5"
       bind:value={value6}
       placeholder="Name"
       placeholderIsMinWidth
-      class="rounded bg-inherit px-2 py-2 font-semibold outline-none transition-colors hover:bg-gray-100 focus:bg-gray-100" />
-
+      class="rounded bg-inherit px-2 py-2 text-sm font-semibold outline-none transition-colors hover:bg-gray-100 focus:bg-gray-100" />
     <AutosizeInput
       bind:inputRef={descriptionRef}
       id="demo-input-5"
       bind:value={value7}
       placeholder="Description"
       placeholderIsMinWidth
-      class="focus:bg-white-100 rounded bg-inherit px-2 py-[10px] text-sm font-semibold text-gray-600 outline-none  transition-colors hover:bg-gray-100 focus:bg-gray-100" />
+      class="focus:bg-white-100 rounded bg-inherit px-2 py-2 text-sm font-medium text-gray-400 outline-none  transition-colors hover:bg-gray-100 focus:bg-gray-100" />
+    <AutosizeInput
+      id="demo-input-6"
+      wrapperClass="ml-auto"
+      bind:value={value8}
+      placeholder="Description"
+      placeholderIsMinWidth
+      class="focus:bg-white-100 ml-auto rounded bg-inherit px-2 py-2 text-sm font-medium text-gray-400 outline-none  transition-colors hover:bg-gray-100 focus:bg-gray-100" />
   </div>
 </div>

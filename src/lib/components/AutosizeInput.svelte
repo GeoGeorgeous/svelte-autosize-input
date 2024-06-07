@@ -4,6 +4,7 @@
   export let placeholder = '';
   export let placeholderIsMinWidth = false;
   export let minWidth = 0;
+  export let wrapperClass = '';
 
   let inputWidth = +minWidth;
   let containerWidth = 0;
@@ -22,13 +23,35 @@
       newInputWidth = minWidth;
     }
 
-    containerWidth = getComputedStyle(wrapperRef.parentElement).width.replace(
-      'px',
-      ''
-    );
+    // containerWidth = getComputedStyle(wrapperRef.parentElement).width.replace(
+    //   'px',
+    //   ''
+    // );
 
-    if (newInputWidth >= containerWidth) {
-      newInputWidth = containerWidth;
+    // Calculate total width occupied by sibling elements
+    let siblingsWidth = 0;
+    const siblings = wrapperRef.parentElement.children;
+    for (let i = 0; i < siblings.length; i++) {
+      if (siblings[i] !== wrapperRef) {
+        const siblingStyle = window.getComputedStyle(siblings[i]);
+        siblingsWidth +=
+          siblings[i].offsetWidth +
+          parseFloat(siblingStyle.marginLeft) +
+          parseFloat(siblingStyle.marginRight);
+      }
+    }
+
+    // Calculate the maximum available width for the input
+    const parentStyle = window.getComputedStyle(wrapperRef.parentElement);
+    const parentPadding =
+      parseFloat(parentStyle.paddingLeft) +
+      parseFloat(parentStyle.paddingRight) +
+      parseFloat(parentStyle.gap);
+    const parentWidth = wrapperRef.parentElement.clientWidth - parentPadding;
+    const availableWidth = parentWidth - siblingsWidth;
+
+    if (newInputWidth > availableWidth) {
+      newInputWidth = availableWidth;
     }
 
     inputWidth = newInputWidth;
@@ -71,7 +94,7 @@
   });
 </script>
 
-<div bind:this={wrapperRef} class={`inline-flex`}>
+<div bind:this={wrapperRef} class={`flex`}>
   <input
     bind:this={inputRef}
     bind:value
@@ -79,6 +102,7 @@
     class={`box-content`}
     {placeholder}
     on:input={updateInputWidth}
+    on:focus={updateInputWidth}
     on:blur
     on:change
     on:click
