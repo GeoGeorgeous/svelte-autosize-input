@@ -43,7 +43,7 @@
 
     inputWidth = newInputWidth;
   };
-  const copyInputStyles = (): void => {
+  export const copyInputStyles = (): void => {
     if (!window.getComputedStyle || !inputRef || !sizerRef) {
       return;
     }
