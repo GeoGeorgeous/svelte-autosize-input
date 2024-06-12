@@ -80,7 +80,7 @@
   });
 </script>
 
-<div bind:this={wrapperRef} class="flex">
+<div bind:this={wrapperRef} class="autosize-wrapper">
   <input
     bind:this={inputRef}
     bind:value
@@ -105,16 +105,29 @@
     on:paste
     on:wheel|passive
     {...$$restProps} />
-  <div
-    bind:this={sizerRef}
-    class="invisible absolute left-0 top-0 overflow-scroll whitespace-pre">
+  <div bind:this={sizerRef} class="autosize-sizer">
     {value || ''}
   </div>
   {#if placeholder}
-    <div
-      bind:this={placeHolderSizerRef}
-      class="invisible absolute left-0 top-0 overflow-scroll whitespace-pre">
+    <div bind:this={placeHolderSizerRef} class="autosize-sizer">
       {placeholder}
     </div>
   {/if}
 </div>
+
+<style>
+  .autosize-wrapper {
+    display: flex;
+  }
+  .autosize-wrapper input {
+    box-sizing: content-box;
+  }
+  .autosize-sizer {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: scroll;
+    white-space: pre;
+  }
+</style>
