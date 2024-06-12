@@ -17,7 +17,7 @@ const config = {
       '@lib/*': './src/lib/*',
       '@/*': './src/*'
     }
-  }
+  },
 };
 
 export default config;
