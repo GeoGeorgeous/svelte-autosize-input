@@ -56,7 +56,6 @@
       'fontStyle',
       'letterSpacing',
       'textTransform',
-      'padding',
       'border'
     ];
 
@@ -122,6 +121,7 @@
     box-sizing: content-box;
   }
   .autosize-sizer {
+    max-width: 100%;
     visibility: hidden;
     position: absolute;
     left: 0;
