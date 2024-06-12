@@ -5,7 +5,7 @@
   type $$Props = HTMLInputAttributes & {
     value: string;
     placeholder?: string | undefined;
-    placeholderIsMinWidth: boolean;
+    placeholderIsMinWidth?: boolean;
     minWidth?: string | undefined;
     maxWidth?: string | undefined;
   };
