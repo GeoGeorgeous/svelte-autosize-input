@@ -22,7 +22,7 @@ Here’s how you can use it in your Svelte or SvelteKit app:
   let value = '';
 </script>
 
-<AutoGrowInput bind:value />
+<AutosizeInput bind:value />
 ```
 
 ## Props
@@ -36,7 +36,7 @@ The current value of the input. This should be bound to a variable to allow two-
   let value = '';
 </script>
 
-<AutoGrowInput bind:value />
+<AutosizeInput bind:value />
 ```
 
 ### `placeholder`
@@ -48,7 +48,7 @@ Optional placeholder text for the input
   let value = '';
 </script>
 
-<AutoGrowInput bind:value placeholder="Your name" />
+<AutosizeInput bind:value placeholder="Your name" />
 ```
 
 ### `placeholderIsMinWidth`
@@ -60,7 +60,7 @@ If true, the placeholder width will be used as the minimum width of the input.
   let value = '';
 </script>
 
-<AutoGrowInput bind:value placeholder="Your name" placeholderIsMinWidth />
+<AutosizeInput bind:value placeholder="Your name" placeholderIsMinWidth />
 ```
 
 ### `minWidth`
@@ -72,7 +72,7 @@ The minimum width of the input in pixels.
   let value = '';
 </script>
 
-<AutoGrowInput bind:value minWidth={300} />
+<AutosizeInput bind:value minWidth={300} />
 ```
 
 ### `maxWidth`
@@ -84,5 +84,5 @@ The maximum width of the input in pixels.
   let value = '';
 </script>
 
-<AutoGrowInput bind:value minWidth={300} />
+<AutosizeInput bind:value minWidth={300} />
 ```
