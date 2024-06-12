@@ -8,6 +8,7 @@
     placeholderIsMinWidth?: boolean;
     minWidth?: string | undefined;
     maxWidth?: string | undefined;
+    type: 'text' | 'email' | 'number' | 'tel' | 'url';
   };
 
   export let value: $$Props['value'] = undefined;
@@ -15,6 +16,11 @@
   export let placeholderIsMinWidth: $$Props['placeholderIsMinWidth'] = false;
   export let minWidth: $$Props['minWidth'] = undefined;
   export let maxWidth: $$Props['maxWidth'] = undefined;
+  export let type: $$Props['type'] = 'text';
+
+  const useType = (node: HTMLInputElement) => {
+    node.type = type;
+  };
 
   let inputWidth = minWidth ? +minWidth : 0;
 
@@ -102,6 +108,7 @@
     on:mouseleave
     on:paste
     on:wheel|passive
+    use:useType
     {...$$restProps} />
   <div bind:this={sizerRef} class="autosize-sizer">
     {value || ''}
