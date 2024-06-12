@@ -3,12 +3,12 @@
   import type { HTMLInputAttributes } from 'svelte/elements';
 
   type $$Props = HTMLInputAttributes & {
-    value: string;
+    value: string | number;
     placeholder?: string | undefined;
     placeholderIsMinWidth?: boolean;
     minWidth?: string | undefined;
     maxWidth?: string | undefined;
-    type: 'text' | 'email' | 'number' | 'tel' | 'url';
+    type?: 'text' | 'email' | 'number' | 'tel' | 'url' | undefined;
   };
 
   export let value: $$Props['value'] = undefined;
@@ -19,7 +19,11 @@
   export let type: $$Props['type'] = 'text';
 
   const useType = (node: HTMLInputElement) => {
-    node.type = type;
+    if (!type) {
+      node.type = 'text';
+    } else {
+      node.type = type;
+    }
   };
 
   let inputWidth = minWidth ? +minWidth : 0;
