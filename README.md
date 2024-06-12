@@ -1,58 +1,88 @@
-# create-svelte
+# Svelte-Autosize-Input
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A flexible input component for Svelte that automatically adjusts its width to fit the current content.
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+[Live demo](https://svelte-autosize-input.vercel.app/) | [Github Repo](https://github.com/GeoGeorgeous/svelte-autosize-input)
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm i svelte-autosize-input
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+`Svelte-Autosize-Input` wraps an `<input>` field to dynamically adjusts its width based on its content.
 
-```bash
-npm run dev
+Here’s how you can use it in your Svelte or SvelteKit app:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```svelte
+<script>
+  import AutosizeInput from 'svelte-autosize-input';
+  let value = '';
+</script>
+
+<AutoGrowInput bind:value />
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## Props
 
-## Building
+### `value`
 
-To build your library:
+The current value of the input. This should be bound to a variable to allow two-way data binding.
 
-```bash
-npm run package
+```svelte
+<script>
+  let value = '';
+</script>
+
+<AutoGrowInput bind:value />
 ```
 
-To create a production version of your showcase app:
+### `placeholder`
 
-```bash
-npm run build
+Optional placeholder text for the input
+
+```svelte
+<script>
+  let value = '';
+</script>
+
+<AutoGrowInput bind:value placeholder="Your name" />
 ```
 
-You can preview the production build with `npm run preview`.
+### `placeholderIsMinWidth`
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+If true, the placeholder width will be used as the minimum width of the input.
 
-## Publishing
+```svelte
+<script>
+  let value = '';
+</script>
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+<AutoGrowInput bind:value placeholder="Your name" placeholderIsMinWidth />
+```
 
-To publish your library to [npm](https://www.npmjs.com):
+### `minWidth`
 
-```bash
-npm publish
+The minimum width of the input in pixels.
+
+```svelte
+<script>
+  let value = '';
+</script>
+
+<AutoGrowInput bind:value minWidth={300} />
+```
+
+### `maxWidth`
+
+The maximum width of the input in pixels.
+
+```svelte
+<script>
+  let value = '';
+</script>
+
+<AutoGrowInput bind:value minWidth={300} />
 ```
