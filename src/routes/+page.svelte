@@ -2,7 +2,7 @@
   import AutosizeInput from '@components/AutosizeInput.svelte';
 
   let exampleValue1 = 'Type something to see the input grow...';
-  let exampleValue2 = '14';
+  let exampleValue2 = 14;
   let exampleValue3 = '';
   let exampleValue4 = '';
   let exampleValue5 = '';
