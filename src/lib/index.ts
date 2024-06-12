@@ -1,2 +1,2 @@
-import AutosizeInput from '@components/AutosizeInput.svelte';
+import AutosizeInput from './components/AutosizeInput.svelte';
 export default AutosizeInput;
