@@ -6,7 +6,7 @@
   let exampleValue3 = '';
   let exampleValue4 = '';
   let exampleValue5 = '';
-  let exampleValue6 = 'McDonalds';
+  let exampleValue6 = "McDonald's";
   let exampleValue7 = 'Double Cheeseburger, Fries, and a Coke';
   let exampleValue8 = '29.99';
 
@@ -81,8 +81,9 @@
   <label for="demo-input-6" class="mb-1 text-sm font-semibold text-gray-800"
     >A group of editable inputs inside flexbox card:</label>
 
-  <div class="mt-4 flex flex-row items-center gap-4 rounded bg-white px-6 py-2">
-    <div class="rounded-full bg-gray-100 p-2">
+  <div
+    class="mt-4 flex flex-col flex-wrap gap-1 rounded bg-white px-2 py-2 md:flex-row md:items-center md:gap-4 md:px-6">
+    <div class="w-fit rounded-full bg-gray-100 p-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -99,25 +100,25 @@
           d="M16.565 10.435 18.6 8.4a2.501 2.501 0 1 0 1.65-4.65 2.5 2.5 0 1 0-4.66 1.66l-2.024 2.025" /><path
           d="m8.5 16.5-1-1" /></svg>
     </div>
-    <div class="shrink-2 flex overflow-hidden">
+    <div class="shrink-2 flex max-w-full overflow-hidden">
       <AutosizeInput
         id="demo-input-6"
         bind:value={exampleValue6}
         maxWidth="200"
         placeholder="Name"
         placeholderIsMinWidth
-        class="rounded bg-inherit px-2 py-2 text-sm font-semibold outline-none transition-colors hover:bg-gray-100 focus:bg-gray-100" />
+        class="rounded bg-inherit px-2 py-0.5 text-sm font-semibold outline-none transition-colors hover:bg-gray-100 focus:bg-gray-100 md:py-2" />
     </div>
-    <div class="shrink-2 flex overflow-hidden">
+    <div class="shrink-2 flex max-w-full overflow-hidden">
       <AutosizeInput
         id="demo-input-7"
         maxWidth="400"
         bind:value={exampleValue7}
         placeholder="Description"
         placeholderIsMinWidth
-        class="focus:bg-white-100 rounded bg-inherit px-2 py-2 text-sm font-medium text-gray-400 outline-none  transition-colors hover:bg-gray-100 focus:bg-gray-100" />
+        class="focus:bg-white-100 rounded bg-inherit px-2 py-0.5 text-sm font-medium text-gray-400 outline-none transition-colors  hover:bg-gray-100 focus:bg-gray-100 md:py-2" />
     </div>
-    <div class="shrink-2 ml-auto flex overflow-hidden">
+    <div class="shrink-2 flex max-w-full overflow-hidden md:ml-auto">
       <AutosizeInput
         id="demo-input-8"
         step="0.01"
@@ -128,7 +129,7 @@
         maxWidth="60"
         placeholder="0.00"
         placeholderIsMinWidth
-        class="focus:bg-white-100 ml-auto rounded bg-inherit px-2 py-2 text-sm font-semibold outline-none  transition-colors hover:bg-gray-100 focus:bg-gray-100" />
+        class="focus:bg-white-100 ml-auto rounded bg-inherit px-2 py-0.5 text-sm font-semibold outline-none transition-colors  hover:bg-gray-100 focus:bg-gray-100 md:py-2" />
     </div>
   </div>
 </div>
