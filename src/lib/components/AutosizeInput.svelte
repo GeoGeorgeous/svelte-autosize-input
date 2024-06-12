@@ -84,8 +84,7 @@
   <input
     bind:this={inputRef}
     bind:value
-    style={`width: ${inputWidth}px;`}
-    class="box-content"
+    style={`width: ${inputWidth}px; ${$$restProps.style}`}
     {placeholder}
     on:input={() => updateInputWidth}
     on:focus
