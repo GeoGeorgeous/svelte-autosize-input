@@ -127,7 +127,10 @@ This method is called whenever there is a need to recalculate the input field's 
   };
 </script>
 
-<AutosizeInput bind:value bind:this={el} on:focus={updateInputWidthOnFocus} />
+<AutosizeInput
+  bind:value
+  bind:this={element}
+  on:focus={updateInputWidthOnFocus} />
 ```
 
 #### `copyInputStyles()`
@@ -144,5 +147,8 @@ Copies specific CSS styles from the input field to the placeholder and content s
   };
 </script>
 
-<AutosizeInput bind:value bind:this={el} on:focus={copyInputStylesOnFocus} />
+<AutosizeInput
+  bind:value
+  bind:this={element}
+  on:focus={copyInputStylesOnFocus} />
 ```
