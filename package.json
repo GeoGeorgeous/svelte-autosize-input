@@ -1,8 +1,8 @@
 {
   "name": "svelte-autosize-input",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
-  "description": "Svelte component designed to autosize and dynamically adjust the width of input fields. It grows or shrinks to fit the content and offers custom placeholders and constraints on minimum and maximum sizes, providing a flexible and responsive input solution",
+  "description": "Auto-width, auto-grow input component for Svelte. Dynamically adjusts input field width to grow or shrink with content. Includes customizable placeholders and constraints on minimum and maximum sizes.",
   "keywords": [
     "svelte",
     "svelte-component",
